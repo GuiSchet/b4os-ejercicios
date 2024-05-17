@@ -13,3 +13,5 @@ echo $Bob_pubkey
 MULTISIG=$(bitcoin-cli createmultisig 2 '["'$Alice_pubkey'", "'$Bob_pubkey'"]')
 multisig_address=$(echo $MULTISIG | jq -r '.address')
 echo $multisig_address
+
+## https://github.com/BlockchainCommons/Learning-Bitcoin-from-the-Command-Line/blob/master/04_2_Creating_a_Raw_Transaction.md
