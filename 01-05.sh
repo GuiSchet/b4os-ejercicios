@@ -15,3 +15,13 @@ multisig_address=$(echo $MULTISIG | jq -r '.address')
 echo $multisig_address
 
 ## https://github.com/BlockchainCommons/Learning-Bitcoin-from-the-Command-Line/blob/master/04_2_Creating_a_Raw_Transaction.md
+
+Trader=$(bitcoin-cli getnewaddress)
+Trader_pubkey=$(bitcoin-cli -named getaddressinfo address=$Trader | jq -r '.pubkey')
+bitcoin-cli generatetoaddress 100 $Trader
+utxo=$(bitcoin-cli listunspent | jq -r '.[0]')
+utxo_txid=$(bitcoin-cli listunspent | jq -r '.[0] | .txid') 
+utxo_vout=$(bitcoin-cli listunspent | jq -r '.[0] | .vout')
+rawtxhex=$(bitcoin-cli -named createrawtransaction inputs='''[ { "txid": "'$utxo_txid'", "vout": '$utxo_vout' } ]''' outputs='''{ "'$multisig_address'": 45, "'$Trader'": 4.999 }''' locktime=150)
+signedtx=$(bitcoin-cli -named signrawtransactionwithwallet hexstring=$rawtxhex | jq -r '.hex')
+bitcoin-cli -named sendrawtransaction hexstring=$signedtx
