@@ -10,6 +10,6 @@ Alice_pubkey=$(bitcoin-cli -named getaddressinfo address=$Alice | jq -r '.pubkey
 echo $Alice_pubkey
 Bob_pubkey=$(bitcoin-cli -named getaddressinfo address=$Bob | jq -r '.pubkey')
 echo $Bob_pubkey
-multisig=$(bitcoin-cli createmultisig 2 "[\"$Alice_pubkey\",\"$Bob_pubkey\"]")
-multisig_address=$(multisig | jq -r '.address')
+MULTISIG=$(bitcoin-cli createmultisig 2 '["'$Alice_pubkey'", "'$Bob_pubkey'"]')
+multisig_address=$(echo $MULTISIG | jq -r '.address')
 echo $multisig_address
