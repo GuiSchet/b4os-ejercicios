@@ -6,8 +6,6 @@ echo "rpcconnect=52.214.22.54" >> ~/.bitcoin/bitcoin.conf
 echo "rpcuser=user_083" >> ~/.bitcoin/bitcoin.conf
 echo "rpcpassword=Tej59pSEfH96" >> ~/.bitcoin/bitcoin.conf
 
-bitcoind -daemon
-
 sudo apt update
 sudo apt install jq
 
